@@ -4,26 +4,36 @@ This is a Regex cheatsheet
 
 ## Summary
 
-A regular expression is a sequence of characters that defines a search pattern for certain target text combination. Such sequence of characters is made up by preset notations (meta and literal characters) that form conditions to narrow a larger text down the text of search.
+A regular expression is a sequence of characters that defines a search pattern for a character combination. Such sequence is composed by preset notations (meta and literal characters) that form conditions to narrow a larger text down to the text of search.
 
 This cheatsheet provides an overview of regex meta characters in the context of Javascript.
 
 ## Table of Contents
 
-- [Anchors](#anchors)
-- [Quantifiers](#quantifiers)
-- [Grouping Constructs](#grouping-constructs)
-- [Bracket Expressions](#bracket-expressions)
+- [Examples](#Examples)
 - [Character Classes](#character-classes)
+- [Assertions](#assertions)
+- [Grouping Constructs](#grouping-constructs)
+- [Quantifiers](#quantifiers)
+- [Bracket Expressions](#bracket-expressions)
 - [The OR Operator](#the-or-operator)
 - [Flags](#flags)
 - [Character Escapes](#character-escapes)
 
-## Regex Components
+## Regex
 
-This is how Regex typically look like:
+### Examples
+
+| function             | example                    | Regex                                                           |
+| -------------------- | -------------------------- | --------------------------------------------------------------- |
+| Matching a Hex Value | #FF5733                    | /^#?([a-f0-9]{6}\|[a-f0-9]{3})$/gi                              |
+| Matching an Email    | test.1111@gmail.com        | /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/               |
+| Matching a URL       | https://regex101.com/      | /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]_)_\/?/ |
+| Matching an HTML Tag | `<div>this is a div</div>` | /^<([a-z]+)([^<]+)_(?:>(._)<\/\1>\|\s+\/>)$/                    |
 
 ### Character Classes
+
+Characters, special characters and signs<strong style="color:red"> position </strong>
 
 | topic | function                                              | example                                                             | Regex                                   | Alternative     |
 | ----- | ----------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------- | --------------- |
@@ -34,28 +44,25 @@ This is how Regex typically look like:
 | \W    | <span style="color:red">NOT</span> alphanumeric + \_  | Javascript                                                          | /\W/                                    | /[^a-za-z0-9_]/ |
 | \s    | white space                                           | foo<span style="color:red"> bar</span>                              | /<span style="color:red">\s</span>\w\*/ |                 |
 | \S    | <span style="color:red">OTHER THAN</span> white space | <span style="color:red">foo</span> bar                              | /<span style="color:red">\S</span>\w\*/ |                 |
-| \t    | tab                                                   |                                                                     |                                         |                 |
-| \r    | return                                                |                                                                     |                                         |                 |
-| \n    | linefeed                                              |                                                                     |                                         |                 |
-| \v    | vertical tab                                          |                                                                     |                                         |                 |
-| \f    | form-feed                                             |                                                                     |                                         |                 |
-| \0    | NUL character                                         |                                                                     |                                         |                 |
-| \t    | tab                                                   |                                                                     |                                         |                 |
 
 ### Assertions
 
 Anchors mark the <strong style="color:red"> position </strong>
 
-| char    | function             | example                                   | Regex                      |
-| ------- | -------------------- | ----------------------------------------- | -------------------------- |
-| ^       | beginning            | <span style="color:red">J</span>avascript | /^J/                       |
-| $       | end                  | Javascrip<span style="color:red">t</span> | /t$/                       |
-| x(?=y)  | look ahead           | <span style="color:red">Jack</span> Sprat | /Jack(?=\sSprat\|\sFrost)/ |
-| x(?!y)  | NEGATIVE look ahead  | Jack Frost                                | /Jack(?!\sSprat\|\sFrost)/ |
-| (?<=y)x | look behind          | Jack <span style="color:red">Sprat</span> | (?<=Jack\s\|Tom\s)Sprat    |
-| (?<!y)x | NEGATIVE look behind | Jack Sprat                                | (?<!Jack\s\|Tom\s)Sprat    |
+| char    | function             | example                                                                          | Regex                      |
+| ------- | -------------------- | -------------------------------------------------------------------------------- | -------------------------- |
+| ^       | beginning            | <span style="color:red">J</span>avascript                                        | /^J/                       |
+| $       | end                  | Javascrip<span style="color:red">t</span>                                        | /t$/                       |
+| x(?=y)  | look ahead           | <span style="color:red">Jack</span> Sprat                                        | /Jack(?=\sSprat\|\sFrost)/ |
+| x(?!y)  | NEGATIVE look ahead  | Jack Frost                                                                       | /Jack(?!\sSprat\|\sFrost)/ |
+| (?<=y)x | look behind          | Jack <span style="color:red">Sprat</span>                                        | (?<=Jack\s\|Tom\s)Sprat    |
+| (?<!y)x | NEGATIVE look behind | Jack Sprat                                                                       | (?<!Jack\s\|Tom\s)Sprat    |
+| \b      | word boundary        | Bojack's <span style="color:red">jacket</span>                                   | \bjack                     |
+| \B      | NONE word boundary   | Boja<span style="color:red">ck</span>'s CK ja<span style="color:red">ck</span>et | /\Bck/gi                   |
 
 ### Grouping Constructs
+
+Group the <strong style="color:red"> characters </strong>
 
 | char         | function                         | example                                                                                                      | Regex                            |
 | ------------ | -------------------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------------------- |
@@ -67,32 +74,66 @@ Anchors mark the <strong style="color:red"> position </strong>
 
 ### Quantifiers
 
-| char   | function                        | example                                                                             | Regex  |
-| ------ | ------------------------------- | ----------------------------------------------------------------------------------- | ------ |
-| x\*    | 0 or more repetition            | <span style="color:red">boooooed</span> or <span style="color:red">bird</span>      | /bo\*/ |
-| x+     | 1 or more repetition            | <span style="color:red">boooooed</span> but NOT <span style="color:red">bird</span> | /bo+/  |
-| x?     | 0 or 1                          |                                                                                     |        |
-| x{n}   |                                 | <span style="color:red"></span>                                                     |        |
-| x{n,}  |                                 | <span style="color:red"></span>                                                     |        |
-| x{n,m} | <span style="color:red"></span> |                                                                                     |        |
+| char   | function             | example                                                                             | Regex                            |
+| ------ | -------------------- | ----------------------------------------------------------------------------------- | -------------------------------- |
+| x\*    | 0 or more repetition | <span style="color:red">boooooed</span> or <span style="color:red">bird</span>      | /bo\*/                           |
+| x+     | 1 or more repetition | <span style="color:red">boooooed</span> but NOT <span style="color:red">bird</span> | /bo+/                            |
+| x?     | 0 or 1               | `no one cares if is here`                                                           | /no one cares if( Ben)? is here/ |
+| x{n,m} | repeat times         | See bracket expressions                                                             | -                                |
 
 ### Bracket Expressions
 
+| Bracket | function                   | example                                                                                                                                                         | Regex                      |
+| ------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| []      | a set of character         | Eleph<span style="color:red">a</span>nt                                                                                                                         | /[a-d]/                    |
+| {}      | match times (2 to 4 times) | <span style="color:red">Ba-ba-ba-</span><span style="color:green">ba-</span><span style="color:green">ba-</span>nana                                            | /(ba\\-){1,3}/             |
+| ()      | remembered matches         | 'Firsty McLastname''Firsty McLastname'.match(/([A-Za-z]+)\s([A-Za-z]+)/) // -> matches 'First McLastname' with 'Firsty' remembered as $1 and 'McLastname' as $2 | /([A-Za-z]+)\s([A-Za-z]+)/ |
+
 ### The OR Operator
+
+| Bracket | function | example                                           | Regex        |
+| ------- | -------- | ------------------------------------------------- | ------------ |
+| (\|)    | or       | <span style="color:red">One Two</span> three four | /(one\|two)/ |
 
 ### Flags
 
-| function     | example    | Regex |
-| ------------ | ---------- | ----- |
-| multiline    | Javascript | //m   |
-| global       | Javascript | //g   |
-| alphanumeric | Javascript | //i   |
-| end          | Javascript | /\d/  |
-| alphanumeric | Javascript | /\w/  |
-| end          | Javascript | /\d/  |
+Flags are declared after / to allow for special functionalities
+Common flags are as follow ...
+
+| function                               | Flag |
+| -------------------------------------- | ---- |
+| multiline                              | m    |
+| global                                 | g    |
+| case-insensitive                       | i    |
+| Generate indices for substring matches | d    |
 
 ### Character Escapes
 
+The backslash in a regular expression precedes a literal character.
+Certain letters that represent common character classes can be escaped, such as \w for a word character or \s for a space.
+
+| escaped characters | Flag                                        |
+| ------------------ | ------------------------------------------- |
+| \\                 | a single backslash \                        |
+| \A                 | start of a string                           |
+| \b                 | word boundary                               |
+| \B                 | not word boundary                           |
+| \d                 | [0-9]                                       |
+| \D                 | [^0-9]                                      |
+| \l                 | [a-z]                                       |
+| \L                 | [^a-z]                                      |
+| \u                 | `[^A-Z]`                                    |
+| \U                 | `[^A-Z]`                                    |
+| \w                 | `[a-Z0-9_]`                                 |
+| \W                 | `[^a-Z0-9_]`                                |
+| \r                 | return                                      |
+| \s                 | space                                       |
+| \S                 | NOT space                                   |
+| \S                 | NOT space                                   |
+| \Q                 | ignore escaped characters until \E is found |
+| \E                 | stop processing escaped characters          |
+
 ## Author
 
-A short section about the author with a link to the author's GitHub profile (replace with your information and a link to your profile)
+hy -
+https://github.com/heranYang93
